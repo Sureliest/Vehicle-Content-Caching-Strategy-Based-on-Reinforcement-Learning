@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
+    <title>all movies</title>
+    <style>
+        li.a
+        {
+            padding: 5px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>{{name}}'s movies list</h1>
+    </div>
+    <div><p>{{ movies|length }} Titles</p>
+    <ul class="movie-list">
+    {% for movie in movies %}
+    <div><li style="background-color:#68786C" class="a">{{movie}}</li></div>
+    {% endfor %}
+    </ul>
+    </div>
+    <div>
+        <a href=" http://127.0.0.1:5000/">back to homepage</a>
+    </div>
+</body>
+</html>

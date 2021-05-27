@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
+    <!--base target="_blank"-->
+</head>
+<body>
+    <h2>
+    <img alt="Avatar" class="avatar"  src="{{ url_for('static', filename='images/cool.jpg') }}">
+    {{ name }}'s Watchlist
+    </h2>
+    <p>{{ movies|length }} Titles</p>
+    <ul class="movie-list">
+        {% for movie in movies %}
+        <div><li>{{ movie.title }} - {{ movie.year }}</li></div>
+        {% endfor %}
+    </ul>
+    <img alt="Walking Totoro" class="totoro" src="{{ url_for('static', filename='images/totoro.gif') }}">
+    <footer>
+        <small>&copy; 2018 <a href="http://helloflask.com/tutorial">HelloFlask</a></small>
+    </footer>
+    <a href="http://127.0.0.1:5000/files">files directory</a>
+</body>
+</html>
