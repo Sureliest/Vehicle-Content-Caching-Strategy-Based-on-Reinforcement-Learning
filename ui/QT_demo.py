@@ -86,6 +86,9 @@ class Ui_Dialog(object):
                                      "QPushButton{border:2px}"
                                      "QPushButton{border-radius:10px}"
                                      "QPushButton{padding:2px 4px}")
+        self.series = QLineSeries()
+        self.x_Aix = QValueAxis()
+        self.y_Aix = QValueAxis()
 
 
     def retranslateUi(self, Dialog):

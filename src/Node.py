@@ -45,12 +45,12 @@ class Node:
         for node in self.request_list[0]:
             current_cache.append(node[0:2])#取出缓存中电影的类型
         action,action_num,kind = mab.e_greedy(current_cache)
-        # print('kind,action,action_num:\n',kind,action,action_num)
-        # print('node_id:',self.node_id)
+        print('kind,action,action_num:\n',kind,action,action_num)
+        print('node_id:',self.node_id)
         for i in range(kind):
             if action_num[i] >= 0.1:#如果比例小于0.1代表用户申请该类型的数据少
                 self.train_cache.append(action[i])#将该类型加入到训练后的缓存里
-        # print('training:\n',self.train_cache)
+        print('training:\n',self.train_cache)
 
 
     def get_mean_latency(self):

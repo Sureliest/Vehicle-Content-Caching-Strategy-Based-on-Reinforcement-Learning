@@ -152,6 +152,7 @@ def control_movement(animation):
     for i in range(len(rsus)):  # 为服务器随机选择地点
         rsus[i].position_x = x_position[i]
         rsus[i].position_y = y_position[i]
+        print('id:{0},x:{1},y:{2},file:{3}'.format(rsus[i].id,rsus[i].position_x,rsus[i].position_y,rsus[i].file))
 
     controller.rsus = rsus  # 绑定到控制器中
     controller.mbs = Server.MBS()
@@ -160,7 +161,7 @@ def control_movement(animation):
     sim_time = animation
     for i in range(0, sim_time + 1):
         update_node_position(movement_matrix, node_position, i, 0.01, animation, nodelist, com_nodelist, controller)
-        # print(nodelist)
+        print(nodelist)
     print("exiting......")
     return nodelist
 
@@ -201,15 +202,15 @@ def chart_view(point_list):
     # mw.chartview.clear()
     print(point_list)
     p_list = []
-    mw.series = QLineSeries()
-    mw.x_Aix = QValueAxis()
-    mw.y_Aix = QValueAxis()
     # mw.chartview.chart().clear()
     i = 1
     for point in point_list:
         point = QPointF(i , point)
         i += 1
         p_list.append(point)
+    # mw.series = QLineSeries()
+    # mw.x_Aix = QValueAxis()
+    # mw.y_Aix = QValueAxis()
     mw.series.replace(p_list)
     # mw.series.setName("延迟分析")
     mw.x_Aix.setRange(0.00 , len(point_list))
@@ -221,7 +222,7 @@ def chart_view(point_list):
     mw.x_Aix.setMinorTickCount(0)
     mw.y_Aix.setTickCount(3)
     mw.y_Aix.setMinorTickCount(0)
-    print("True")
+    # print("True")
     # mw.chartview.chart().clear()
     mw.chartview.chart().addSeries(mw.series)
     mw.chartview.chart().setAxisX(mw.x_Aix)
@@ -277,3 +278,4 @@ if __name__ == '__main__':
 
     mainwindow.show()
     sys.exit(app.exec_())
+    # control_movement(1)

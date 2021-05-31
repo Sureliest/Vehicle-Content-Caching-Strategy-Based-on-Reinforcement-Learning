@@ -6,35 +6,36 @@ import init_data_file as idf
 
 exploration_rate = 0.1
 sigma = 0.1
+real_reward = [0.1,0.3,0.2,0.5,0.1]
 
-# def random_select(N):
-#     expect_reward_estimate = [0]*k
-#     operation = [0]*k
-#     total_reward = 0
-#     for i in range(N):
-#         arm = np.random.choice(k , size=1)[0]
-#         arm_reward = np.random.binomial(1 , real_reward[arm] , size=1)[0]
-#
-#         expect_reward_estimate[arm] = (expect_reward_estimate[arm]*operation[arm] + arm_reward)/(operation[arm] + 1)
-#
-#         operation[arm] += 1
-#
-#         total_reward += arm_reward
-#     return total_reward,expect_reward_estimate,operation
-#
-# def boltzman(N , sigma):
-#     expect_reward_estimate = [0]*k
-#     operation = [0]*k
-#     total_reward = 0
-#     for i in range(N):
-#         reward_prob = np.exp(np.array(expect_reward_estimate)/sigma)/np.exp(np.array(expect_reward_estimate)/sigma).sum()
-#         best_arm = np.random.choice(k , size=1 , p=reward_prob)[0]
-#         best_arm_reward = np.random.binomial(1 , real_reward[best_arm] , size=1)[0]
-#
-#         expect_reward_estimate[best_arm] = (expect_reward_estimate[best_arm] * operation[best_arm] + best_arm_reward)/(operation[best_arm] + 1)
-#         operation[best_arm] += 1
-#         total_reward += best_arm_reward
-#     return total_reward, expect_reward_estimate, operation
+def random_select(N,real_reward,k):
+    expect_reward_estimate = [0]*k
+    operation = [0]*k
+    total_reward = 0
+    for i in range(N):
+        arm = np.random.choice(k , size=1)[0]
+        arm_reward = np.random.binomial(1 , real_reward[arm] , size=1)[0]
+
+        expect_reward_estimate[arm] = (expect_reward_estimate[arm]*operation[arm] + arm_reward)/(operation[arm] + 1)
+
+        operation[arm] += 1
+
+        total_reward += arm_reward
+    return total_reward,expect_reward_estimate,operation
+
+def boltzman(N , sigma,real_reward,k):
+    expect_reward_estimate = [0]*k
+    operation = [0]*k
+    total_reward = 0
+    for i in range(N):
+        reward_prob = np.exp(np.array(expect_reward_estimate)/sigma)/np.exp(np.array(expect_reward_estimate)/sigma).sum()
+        best_arm = np.random.choice(k , size=1 , p=reward_prob)[0]
+        best_arm_reward = np.random.binomial(1 , real_reward[best_arm] , size=1)[0]
+
+        expect_reward_estimate[best_arm] = (expect_reward_estimate[best_arm] * operation[best_arm] + best_arm_reward)/(operation[best_arm] + 1)
+        operation[best_arm] += 1
+        total_reward += best_arm_reward
+    return total_reward, expect_reward_estimate, operation
 
 def ucb(N,real_reward,k):
     expect_reward_estimate = [0]*k
@@ -146,58 +147,60 @@ def get_file():
 
 
 
-# if __name__ == '__main__':
-#     files_matrix = []
-#     file_data = idf.DataFile()
-#     vel,files = file_data.gen_file()
-#     movies = file_data.read_file()
-#     for i in range(file_data.vechile_num):
-#         file_matrix = []
-#         for k in range(file_data.file_num):
-#             file_matrix.append(movies[files[i][k]][0:2])
-#         files_matrix.append(file_matrix)
-#         # print(file_matrix)
-#     example = MAB()
-#     print(files_matrix[0])
-#     a,b,c = example.e_greedy(files_matrix[0])
-#     total_reward = 0
-#     for i in range(c):
-#         print("kind:{0} reward:{1}".format(a[i],b[i]))
-#         total_reward += b[i]
-#     print('total_reward:',total_reward)
-#
-#
-#
-#     n = 1000
-#     total_reward, expect_reward, operation_times = epsilon_greedy(n,0.2,b,c)
-#     print("随机选择的累积奖励：", total_reward)
-#     plt.rcParams['font.sans-serif'] = ['SimHei']
-#     # 在0到1之间生成100个探索率
-#     explore_grad = np.arange(0.01, 1.01, 0.01)
-#
-#
-#     #在不同探索率下，ε-greedy策略的累积奖励
-#     reward_result = [epsilon_greedy(n, i, b,c)[0] for i in explore_grad]
-#
-#
-#     #绘制折线图
-#     plt.figure(figsize=(8, 6))
-#     plt.plot(explore_grad, reward_result, c='deepskyblue')
-#     plt.xlabel('探索率', fontsize=12)
-#     plt.ylabel('累积奖励', fontsize=12)
-#     plt.xlim(0, 1)
-#     plt.show()
-#
-#
-#     expect_reward_table = pd.DataFrame({
-#         '期望奖励' : expect_reward,
-#         '操作次数' : operation_times
-#     })
-#     print(expect_reward_table)
-
 if __name__ == '__main__':
-    files = get_file()
-    print(files)
+    files_matrix = []
+    file_data = idf.DataFile()
+    vel,files = file_data.gen_file()
+    movies = file_data.read_file()
+    for i in range(file_data.vechile_num):
+        file_matrix = []
+        for k in range(file_data.file_num):
+            file_matrix.append(movies[files[i][k]][0:2])
+        files_matrix.append(file_matrix)
+        # print(file_matrix)
+    example = MAB()
+    print(files_matrix[0])
+    a,b,c = example.e_greedy(files_matrix[0])
+    total_reward = 0
+    for i in range(c):
+        print("kind:{0} reward:{1}".format(a[i],b[i]))
+        total_reward += b[i]
+    print('total_reward:',total_reward)
+
+
+
+    n = 1000
+    # total_reward, expect_reward, operation_times = epsilon_greedy(n,0.2,b,c)
+    # total_reward, expect_reward, operation_times = ucb(n, b, c)
+    total_reward, expect_reward, operation_times = boltzman(n, 0.1, b, c)
+    print("随机选择的累积奖励：", total_reward)
+    plt.rcParams['font.sans-serif'] = ['SimHei']
+    # 在0到1之间生成100个探索率
+    explore_grad = np.arange(0.01, 1.01, 0.01)
+
+
+    #在不同探索率下，ε-greedy策略的累积奖励
+    reward_result = [epsilon_greedy(n, i, b,c)[0] for i in explore_grad]
+
+
+    #绘制折线图
+    plt.figure(figsize=(8, 6))
+    plt.plot(explore_grad, reward_result, c='deepskyblue')
+    plt.xlabel('探索率', fontsize=12)
+    plt.ylabel('累积奖励', fontsize=12)
+    plt.xlim(0, 1)
+    plt.show()
+
+
+    expect_reward_table = pd.DataFrame({
+        '期望奖励' : expect_reward,
+        '操作次数' : operation_times
+    })
+    print(expect_reward_table)
+
+# if __name__ == '__main__':
+#     files = get_file()
+#     print(files)
 
 
 
