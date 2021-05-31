@@ -152,7 +152,7 @@ def control_movement(animation):
     for i in range(len(rsus)):  # 为服务器随机选择地点
         rsus[i].position_x = x_position[i]
         rsus[i].position_y = y_position[i]
-        print('id:{0},x:{1},y:{2},file:{3}'.format(rsus[i].id,rsus[i].position_x,rsus[i].position_y,rsus[i].file))
+        # print('id:{0},x:{1},y:{2},file:{3}'.format(rsus[i].id,rsus[i].position_x,rsus[i].position_y,rsus[i].file))
 
     controller.rsus = rsus  # 绑定到控制器中
     controller.mbs = Server.MBS()
@@ -161,7 +161,11 @@ def control_movement(animation):
     sim_time = animation
     for i in range(0, sim_time + 1):
         update_node_position(movement_matrix, node_position, i, 0.01, animation, nodelist, com_nodelist, controller)
-        print(nodelist)
+        # print(nodelist)
+    # print([v_node.get_mean_latency()] for v_node in nodelist)
+    for node in nodelist:
+        mean = node.get_mean_latency()
+        print(mean)
     print("exiting......")
     return nodelist
 
@@ -200,17 +204,15 @@ def display_content(nodes):
 
 def chart_view(point_list):
     # mw.chartview.clear()
+    # mw.chartview.chart().clear()
     print(point_list)
     p_list = []
-    # mw.chartview.chart().clear()
+    # mw.chartview.chart().remove(mw.series)
     i = 1
     for point in point_list:
         point = QPointF(i , point)
         i += 1
         p_list.append(point)
-    # mw.series = QLineSeries()
-    # mw.x_Aix = QValueAxis()
-    # mw.y_Aix = QValueAxis()
     mw.series.replace(p_list)
     # mw.series.setName("延迟分析")
     mw.x_Aix.setRange(0.00 , len(point_list))
