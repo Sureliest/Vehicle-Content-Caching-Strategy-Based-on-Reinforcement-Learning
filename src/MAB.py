@@ -146,8 +146,7 @@ def get_file():
         #     file_matrix.append(movies[:])
 
 
-
-if __name__ == '__main__':
+def select_mab_kind(text):
     files_matrix = []
     file_data = idf.DataFile()
     vel,files = file_data.gen_file()
@@ -161,11 +160,11 @@ if __name__ == '__main__':
     example = MAB()
     print(files_matrix[0])
     a,b,c = example.e_greedy(files_matrix[0])
-    total_reward = 0
-    for i in range(c):
-        print("kind:{0} reward:{1}".format(a[i],b[i]))
-        total_reward += b[i]
-    print('total_reward:',total_reward)
+    # total_reward = 0
+    # for i in range(c):
+    #     print("kind:{0} reward:{1}".format(a[i],b[i]))
+    #     total_reward += b[i]
+    # print('total_reward:',total_reward)
 
 
 
@@ -198,9 +197,8 @@ if __name__ == '__main__':
     })
     print(expect_reward_table)
 
-# if __name__ == '__main__':
-#     files = get_file()
-#     print(files)
+if __name__ == '__main__':
+    select_mab_kind(ucb)
 
 
 

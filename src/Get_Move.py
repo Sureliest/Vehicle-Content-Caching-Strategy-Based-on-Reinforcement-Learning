@@ -214,7 +214,7 @@ def chart_view(point_list):
         i += 1
         p_list.append(point)
     mw.series.replace(p_list)
-    # mw.series.setName("延迟分析")
+    mw.series.setName("延迟分析")
     mw.x_Aix.setRange(0.00 , len(point_list))
     mw.y_Aix.setRange(min(point_list) , max(point_list))
     mw.x_Aix.setLabelFormat("%0.2f")

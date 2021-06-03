@@ -99,4 +99,4 @@ class Ui_Dialog(object):
         self.latency.setText(_translate("Dialog", "延迟分析"))
         self.content_analys.setText(_translate("Dialog","内容分析"))
         self.movies.setText(_translate("Dialog","查看文件"))
-        self.chart.setText(_translate("Dialog","饼状图"))
+        self.chart.setText(_translate("Dialog","算法分析"))
