@@ -82,6 +82,7 @@ def d2d_latency(source_x , source_y , dest_x , dest_y):
     return latency
 
 def rsu_latency(source_x , source_y , dest_x , dest_y):
+
     pd = 0.25
     k = 0.01
     e = 10**(-17.4)*10

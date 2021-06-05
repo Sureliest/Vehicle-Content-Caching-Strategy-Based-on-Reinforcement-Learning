@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-mode = ['ucb','egreedy','boltzman','all']
+mode = ['egreedy','三种策略奖励对比']
 from src import MAB
 
 
@@ -36,7 +36,7 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        Dialog.setWindowTitle(_translate("Dialog", "算法分析"))
         self.pushButton.setText(_translate("Dialog", "确定"))
         self.label.setText(_translate("Dialog", "选择模式"))
 

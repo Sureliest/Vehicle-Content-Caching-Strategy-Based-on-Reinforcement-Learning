@@ -177,6 +177,7 @@ import ui.QT_demo as UI
 import ui.chart as chart
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
+from PyQt5.QtGui import *
 from PyQt5.QtChart import *
 import sys,os
 
@@ -201,10 +202,14 @@ def display_content(nodes):
     mw.content_view.clicked.connect(content_all)
     # print(nodes[c_v-1].latency)
     mw.latency.clicked.connect(lambda :chart_view(nodes[c_v-1].latency))
+    mw.content_analys.clicked.connect(lambda :clear_series(nodes))
 
 def chart_view(point_list):
     # mw.chartview.clear()
     # mw.chartview.chart().clear()
+    mw.series = QLineSeries()
+    mw.x_Aix = QValueAxis()
+    mw.y_Aix = QValueAxis()
     print(point_list)
     p_list = []
     # mw.chartview.chart().remove(mw.series)
@@ -214,22 +219,29 @@ def chart_view(point_list):
         i += 1
         p_list.append(point)
     mw.series.replace(p_list)
-    mw.series.setName("延迟分析")
+    # mw.series.setName("延迟分析")
     mw.x_Aix.setRange(0.00 , len(point_list))
-    mw.y_Aix.setRange(min(point_list) , max(point_list))
+    mw.y_Aix.setRange(0 , max(point_list))
     mw.x_Aix.setLabelFormat("%0.2f")
     mw.y_Aix.setLabelFormat("%0.5f")
 
-    mw.x_Aix.setTickCount(3)
-    mw.x_Aix.setMinorTickCount(0)
-    mw.y_Aix.setTickCount(3)
-    mw.y_Aix.setMinorTickCount(0)
+    # mw.x_Aix.setTickCount(3)
+    # mw.x_Aix.setMinorTickCount(0)
+    # mw.y_Aix.setTickCount(3)
+    # mw.y_Aix.setMinorTickCount(0)
     # print("True")
     # mw.chartview.chart().clear()
+    # print('11111111')
     mw.chartview.chart().addSeries(mw.series)
+    # print('2222222222222')
     mw.chartview.chart().setAxisX(mw.x_Aix)
     mw.chartview.chart().setAxisY(mw.y_Aix)
+    mw.chartview.chart().createDefaultAxes()  # 使用默认坐标系
+    # print('3333333')
+    mw.chartview.chart().setTitleBrush(QBrush(Qt.cyan))  # 设置标题笔刷
+    mw.chartview.chart().setTitle("延迟分析")  # 设置标题
     mw.chartview.show()
+    # mw.series.clear()
     # mw.Vehicle_view.clicked.connect(lambda:display_content(nodes))
 
 def content_all():
@@ -251,22 +263,32 @@ def showtime():
     timedisplay = time.toString("yyyy-MM-dd hh:mm:ss dddd")  # 格式化一下时间
     mw.label1.setText(timedisplay)
 
-def clear_chart(mw):
-    mw.series.clear()
 
 def get_chart():
     window = QDialog()
     chart_window = chart.Ui_Dialog()
     chart_window.setupUi(window)
-    window.setWindowTitle("饼状图")
+    # window.setWindowTitle("算法分析")
     window.show()
     if window.exec_() == QDialog.Accepted:
         pass
 
+def clear_series(nodes):
+
+    for node in nodes:
+        print('node_id:{0} mean_latency:{1}'.format(node.node_id,node.get_mean_latency()))
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
+    app.setStyle(QStyleFactory.create("Windows"))
     mainwindow = QDialog()
+
+    mainwindow.setWindowOpacity(0.9)  # 设置窗口透明度
+    mainwindow.setAttribute(Qt.WA_TranslucentBackground)
+    # mainwindow.setWindowFlags(Qt.WindowStaysOnBottomHint)
+    mainwindow.setStyleSheet("background-color:#FFFFFF;")
+    # mainwindow.setWindowFlags(Qt.FramelessWindowHint|Qt.Tool)
+
     mw = UI.Ui_Dialog()
     mw.setupUi(mainwindow)
 
@@ -275,7 +297,9 @@ if __name__ == '__main__':
     mw.simulation.clicked.connect(start_coding)
     mw.movies.clicked.connect(view_film)
     mw.timer.timeout.connect(showtime)
+
     mw.chart.clicked.connect(get_chart)
+    # mw.content_analys.clicked.connect(lambda :clear_series(mw))
     # mw.content_view.itemClicked.connect(clicked)
 
     mainwindow.show()

@@ -6,7 +6,7 @@ import init_data_file as idf
 
 exploration_rate = 0.1
 sigma = 0.1
-real_reward = [0.1,0.3,0.2,0.5,0.1]
+# real_reward = [0.1,0.3,0.2,0.5,0.1]
 
 def random_select(N,real_reward,k):
     expect_reward_estimate = [0]*k
@@ -147,6 +147,7 @@ def get_file():
 
 
 def select_mab_kind(text):
+    print(text)
     files_matrix = []
     file_data = idf.DataFile()
     vel,files = file_data.gen_file()
@@ -158,8 +159,10 @@ def select_mab_kind(text):
         files_matrix.append(file_matrix)
         # print(file_matrix)
     example = MAB()
-    print(files_matrix[0])
+    # print(files_matrix[0])
     a,b,c = example.e_greedy(files_matrix[0])
+    print(b)
+    print(c)
     # total_reward = 0
     # for i in range(c):
     #     print("kind:{0} reward:{1}".format(a[i],b[i]))
@@ -169,10 +172,10 @@ def select_mab_kind(text):
 
 
     n = 1000
-    # total_reward, expect_reward, operation_times = epsilon_greedy(n,0.2,b,c)
-    # total_reward, expect_reward, operation_times = ucb(n, b, c)
-    total_reward, expect_reward, operation_times = boltzman(n, 0.1, b, c)
-    print("随机选择的累积奖励：", total_reward)
+    total_reward1, expect_reward1, operation_times1 = epsilon_greedy(n,0.1,b,c)
+    total_reward2, expect_reward2, operation_times2 = ucb(n, b, c)
+    total_reward3, expect_reward3, operation_times3 = boltzman(n, 0.1, b, c)
+    print("随机选择的累积奖励：{0},{1},{2}".format(total_reward1,total_reward2,total_reward3))
     plt.rcParams['font.sans-serif'] = ['SimHei']
     # 在0到1之间生成100个探索率
     explore_grad = np.arange(0.01, 1.01, 0.01)
@@ -183,19 +186,30 @@ def select_mab_kind(text):
 
 
     #绘制折线图
-    plt.figure(figsize=(8, 6))
-    plt.plot(explore_grad, reward_result, c='deepskyblue')
-    plt.xlabel('探索率', fontsize=12)
-    plt.ylabel('累积奖励', fontsize=12)
-    plt.xlim(0, 1)
-    plt.show()
+    if text == 'egreedy':
+        plt.figure(figsize=(8, 6))
+        plt.plot(explore_grad, reward_result, c='deepskyblue')
+        plt.xlabel('探索率', fontsize=12)
+        plt.ylabel('累积奖励', fontsize=12)
+        plt.xlim(0, 1)
+        plt.show()
+    elif text == '三种策略奖励对比':
+        reward = [total_reward1,total_reward2,total_reward3]
+        explore = ['epsilon_greedy','ucb','boltzman']
+        print(reward,explore)
+        plt.figure()
+        plt.plot(explore,reward,c='deepskyblue')
+        plt.xlabel('策略', fontsize=12)
+        plt.ylabel('总奖励', fontsize=12)
+        # plt.xlim(0, 1)
+        plt.show()
 
 
-    expect_reward_table = pd.DataFrame({
-        '期望奖励' : expect_reward,
-        '操作次数' : operation_times
-    })
-    print(expect_reward_table)
+    # expect_reward_table = pd.DataFrame({
+    #     '期望奖励' : expect_reward,
+    #     '操作次数' : operation_times
+    # })
+    # print(expect_reward_table)
 
 if __name__ == '__main__':
     select_mab_kind(ucb)

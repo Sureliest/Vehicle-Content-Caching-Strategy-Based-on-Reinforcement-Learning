@@ -72,8 +72,9 @@ class Ui_Dialog(object):
 
 
         self.verticalLayout.addLayout(self.horizontalLayout)
-        self.chartview = QChartView(Dialog)
+        self.chartview = QChartView()
         self.chartview.setObjectName("ChartView")
+        self.chartview.setStyleSheet("background-color:#6DDF6D")
         self.verticalLayout.addWidget(self.chartview)
 
 
@@ -90,6 +91,16 @@ class Ui_Dialog(object):
         self.x_Aix = QValueAxis()
         self.y_Aix = QValueAxis()
 
+        self.latency.setStyleSheet(
+            '''QPushButton{background:#F76677;border-radius:15px;}QPushButton:hover{background:red;}''')
+        self.content_analys.setStyleSheet(
+            '''QPushButton{background:#F7D674;border-radius:15px;}QPushButton:hover{background:yellow;}''')
+        self.movies.setStyleSheet(
+            '''QPushButton{background:#6DDF6D;border-radius:15px;}QPushButton:hover{background:green;}''')
+        self.chart.setStyleSheet(
+            '''QPushButton{background:#87CEFA;border-radius:15px;}QPushButton:hover{background:lightblue;}''')
+        # self.setWindowOpacity(0.9)  # 设置窗口透明度
+        # self.setAttribute(QtCore.Qt.WA_TranslucentBackground)  # 设置窗口背景透明
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
