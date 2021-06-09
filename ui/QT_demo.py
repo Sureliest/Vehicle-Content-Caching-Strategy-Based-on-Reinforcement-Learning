@@ -74,9 +74,10 @@ class Ui_Dialog(object):
         self.verticalLayout.addLayout(self.horizontalLayout)
         self.chartview = QChartView()
         self.chartview.setObjectName("ChartView")
-        self.chartview.setStyleSheet("background-color:#6DDF6D")
+        self.chartview.setStyleSheet("background-color:lightblue")
+        # self.chartview.chart().setStyleSheet("background-color:red")
         self.verticalLayout.addWidget(self.chartview)
-
+        # self.chartview.setStyleSheet('QChartview{background-color:#000000}')
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
@@ -84,21 +85,21 @@ class Ui_Dialog(object):
         self.simulation.setStyleSheet("QPushButton{color:black}"
                                      "QPushButton:hover{color:blue}"
                                      "QPushButton{background-color:lightblue}"
-                                     "QPushButton{border:2px}"
+                                     "QPushButton{border:10px}"
                                      "QPushButton{border-radius:10px}"
-                                     "QPushButton{padding:2px 4px}")
+                                     "QPushButton{padding:5px 10px}")
         self.series = QLineSeries()
         self.x_Aix = QValueAxis()
         self.y_Aix = QValueAxis()
 
         self.latency.setStyleSheet(
-            '''QPushButton{background:#F76677;border-radius:15px;}QPushButton:hover{background:red;}''')
+            '''QPushButton{background:#F76677;border-radius:15px;}QPushButton:hover{background:red;}QPushButton{padding:5px 10px}''')
         self.content_analys.setStyleSheet(
-            '''QPushButton{background:#F7D674;border-radius:15px;}QPushButton:hover{background:yellow;}''')
+            '''QPushButton{background:#F7D674;border-radius:15px;}QPushButton:hover{background:yellow;}QPushButton{padding:5px 10px}''')
         self.movies.setStyleSheet(
-            '''QPushButton{background:#6DDF6D;border-radius:15px;}QPushButton:hover{background:green;}''')
+            '''QPushButton{background:#6DDF6D;border-radius:15px;}QPushButton:hover{background:green;}QPushButton{padding:5px 10px}''')
         self.chart.setStyleSheet(
-            '''QPushButton{background:#87CEFA;border-radius:15px;}QPushButton:hover{background:lightblue;}''')
+            '''QPushButton{background:#87CEFA;border-radius:15px;}QPushButton:hover{background:lightblue;}QPushButton{padding:5px 10px}''')
         # self.setWindowOpacity(0.9)  # 设置窗口透明度
         # self.setAttribute(QtCore.Qt.WA_TranslucentBackground)  # 设置窗口背景透明
 

@@ -117,7 +117,6 @@ class MAB:
                     self.q_num.append(0)
                     action += 1
             self.action_counts += 1
-
         for i in range(action):
             self.q_num[i] = (float)(self.q_num[i]/self.action_counts)
         return self.q,self.q_num,action
@@ -198,7 +197,9 @@ def select_mab_kind(text):
         explore = ['epsilon_greedy','ucb','boltzman']
         print(reward,explore)
         plt.figure()
-        plt.plot(explore,reward,c='deepskyblue')
+        plt.bar(explore,reward,width=0.2)
+        for x,y in zip(explore,reward):
+            plt.text( x , y , '%.2f' % y, ha='center',va='bottom',fontsize=10)
         plt.xlabel('策略', fontsize=12)
         plt.ylabel('总奖励', fontsize=12)
         # plt.xlim(0, 1)

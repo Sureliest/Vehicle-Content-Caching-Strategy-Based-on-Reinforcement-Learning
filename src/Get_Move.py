@@ -1,3 +1,4 @@
+#
 import numpy as np
 import re
 # from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
@@ -224,6 +225,8 @@ def chart_view(point_list):
     mw.y_Aix.setRange(0 , max(point_list))
     mw.x_Aix.setLabelFormat("%0.2f")
     mw.y_Aix.setLabelFormat("%0.5f")
+    mw.x_Aix.setTitleText(u'获取序列数')
+    mw.y_Aix.setTitleText(u'延迟')
 
     # mw.x_Aix.setTickCount(3)
     # mw.x_Aix.setMinorTickCount(0)
@@ -238,7 +241,7 @@ def chart_view(point_list):
     mw.chartview.chart().setAxisY(mw.y_Aix)
     mw.chartview.chart().createDefaultAxes()  # 使用默认坐标系
     # print('3333333')
-    mw.chartview.chart().setTitleBrush(QBrush(Qt.cyan))  # 设置标题笔刷
+    # mw.chartview.chart().setTitleBrush(QBrush(Qt.cyan))  # 设置标题笔刷
     mw.chartview.chart().setTitle("延迟分析")  # 设置标题
     mw.chartview.show()
     # mw.series.clear()
@@ -262,6 +265,7 @@ def showtime():
     time = QDateTime.currentDateTime()  # 获取当前时间
     timedisplay = time.toString("yyyy-MM-dd hh:mm:ss dddd")  # 格式化一下时间
     mw.label1.setText(timedisplay)
+    mw.label1.setStyleSheet('color:white;background-color:back')
 
 
 def get_chart():
@@ -275,18 +279,34 @@ def get_chart():
 
 def clear_series(nodes):
 
-    for node in nodes:
-        print('node_id:{0} mean_latency:{1}'.format(node.node_id,node.get_mean_latency()))
+    # for node in nodes:
+    #     print('node_id:{0} mean_latency:{1}'.format(node.node_id,node.get_mean_latency()))
+
+    explore = [[node.node_id] for node in nodes]
+    reward = [[node.get_mean_latency()] for node in nodes]
+    print(reward, explore)
+    plt.figure()
+    plt.plot(explore, reward, c='deepskyblue')
+
+    plt.rcParams['font.sans-serif'] = ['KaiTi']  # 指定默认字体
+    plt.rcParams['axes.unicode_minus'] = False
+    plt.xlabel(u"结点编号")
+    plt.ylabel(u"平均延迟")
+    # plt.xlim(0, 1)
+    plt.show()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     app.setStyle(QStyleFactory.create("Windows"))
     mainwindow = QDialog()
 
-    mainwindow.setWindowOpacity(0.9)  # 设置窗口透明度
-    mainwindow.setAttribute(Qt.WA_TranslucentBackground)
+    # mainwindow.setWindowOpacity(0.5)  # 设置窗口透明度
+    mainwindow.pale = QPalette()
+    # mainwindow.pale.setBrush(mainwindow.backgroundRole(),QBrush(QPixmap(r'D:\Picture\EVA18.jpg')))
+    mainwindow.setPalette(mainwindow.pale)
+    # mainwindow.setAttribute(Qt.WA_TranslucentBackground)
     # mainwindow.setWindowFlags(Qt.WindowStaysOnBottomHint)
-    mainwindow.setStyleSheet("background-color:#FFFFFF;")
+    # mainwindow.setStyleSheet("background-color:#FFFFFF;")
     # mainwindow.setWindowFlags(Qt.FramelessWindowHint|Qt.Tool)
 
     mw = UI.Ui_Dialog()
