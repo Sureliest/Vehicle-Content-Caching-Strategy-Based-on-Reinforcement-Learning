@@ -36,9 +36,9 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "算法分析"))
+        Dialog.setWindowTitle(_translate("Dialog", "分析"))
         self.pushButton.setText(_translate("Dialog", "确定"))
-        self.label.setText(_translate("Dialog", "选择模式"))
+        self.label.setText(_translate("Dialog", "模式"))
 
 
     def start_mab(self):
